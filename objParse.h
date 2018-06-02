@@ -7,6 +7,15 @@
 
 using namespace std;
 
-struct data{};
-vector < data > readV(string path);
-vector < vector < int > > readF(string path);
+struct points{
+    double x;
+    double y;
+    double z;
+};
+
+struct data{
+    vector < points > vertex;
+    vector < vector < int > >edges;
+};
+
+data readObj(string path);
