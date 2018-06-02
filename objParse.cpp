@@ -7,7 +7,7 @@
 
 using namespace std;
 
-struct points{
+struct point{
     double x;
     double y;
     double z;
