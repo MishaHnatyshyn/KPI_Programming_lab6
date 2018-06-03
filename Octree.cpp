@@ -18,7 +18,7 @@ struct Octree{
 };
 void add_node(point minPoint, point maxPoint, Octree *&MyTree )
 {
-int k;
+    int k;
     if (NULL == MyTree)
     {
         MyTree = new Octree;
@@ -37,7 +37,7 @@ int k;
     float maxX = k*(MyTree->minPoint.x + maxPoint.x)/8;
     float maxY = k*(MyTree->minPoint.y + maxPoint.y)/8;
     float maxZ = k*(MyTree->minPoint.z + maxPoint.z)/8;
-    for (int k = 1; k < 9; k ++){
+    for (k = 1; k < 9; k ++){
         switch(k){
             case 1:
                 if (MyTree->child1 != NULL)
