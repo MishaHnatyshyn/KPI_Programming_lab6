@@ -5,14 +5,7 @@ struct point {
     float z;
 };
 struct Octree{
-    Octree *child1;
-    Octree *child2;
-    Octree *child3;
-    Octree *child4;
-    Octree *child5;
-    Octree *child6;
-    Octree *child7;
-    Octree *child8;
+    Octree * children[8];
     point minPoint;
     point maxPoint;
 };
