@@ -18,7 +18,7 @@ struct Octree{
 };
 void add_node(point minPoint, point maxPoint, Octree *&MyTree )
 {
-    int k;
+    int k = 0;
     if (NULL == MyTree)
     {
         MyTree = new Octree;
