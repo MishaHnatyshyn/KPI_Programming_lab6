@@ -4,19 +4,9 @@
 #include <sstream>
 #include <vector>
 #include <regex>
+#include "objParse.h"
 
 using namespace std;
-
-struct point{
-    double x;
-    double y;
-    double z;
-};
-
-struct data{
-    vector < points > vertex;
-    vector < vector < int > >edges;
-};
 
 data readObj(string path)
 {
