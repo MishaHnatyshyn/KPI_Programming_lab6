@@ -13,8 +13,8 @@ struct Octree{
     Octree *child6;
     Octree *child7;
     Octree *child8;
-    Point minPoint;
-    Point maxPoint;
+    point minPoint;
+    point maxPoint;
 };
 void add_node(point minPoint, point maxPoint, Octree *&MyTree )
 {
