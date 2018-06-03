@@ -30,11 +30,11 @@ void add_node(point minPoint, point maxPoint, Octree *&MyTree ) {
             for (int i = 0; i < 8; i++) {
                 MyTree->children[k]->children[i] = NULL;
                 MyTree->children[k]->minPoint.x = k * (MyTree->minPoint.x + maxPoint.x) / 8 + MyTree->minPoint.x;
-                MyTree->children[k]->minPoint.y = k * (MyTree->minPoint.y + maxPoint.y) / 8 + MyTree->minPoint.x;
-                MyTree->children[k]->minPoint.z = k * (MyTree->minPoint.z + maxPoint.z) / 8 + MyTree->minPoint.x;
+                MyTree->children[k]->minPoint.y = k * (MyTree->minPoint.y + maxPoint.y) / 8 + MyTree->minPoint.y;
+                MyTree->children[k]->minPoint.z = k * (MyTree->minPoint.z + maxPoint.z) / 8 + MyTree->minPoint.z;
                 MyTree->children[k]->maxPoint.x = (k+1) * (MyTree->minPoint.x + maxPoint.x) / 8 + MyTree->minPoint.x;
-                MyTree->children[k]->maxPoint.y = (k+1) * (MyTree->minPoint.y + maxPoint.y) / 8 + MyTree->minPoint.x;
-                MyTree->children[k]->maxPoint.z = (k+1) * (MyTree->minPoint.z + maxPoint.z) / 8 + MyTree->minPoint.x;
+                MyTree->children[k]->maxPoint.y = (k+1) * (MyTree->minPoint.y + maxPoint.y) / 8 + MyTree->minPoint.y;
+                MyTree->children[k]->maxPoint.z = (k+1) * (MyTree->minPoint.z + maxPoint.z) / 8 + MyTree->minPoint.z;
             }
         }
     }
