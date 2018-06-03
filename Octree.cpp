@@ -1,5 +1,5 @@
 #include <iostream>
-struct Point {
+struct point {
     float x;
     float y;
     float z;
@@ -16,7 +16,7 @@ struct Octree{
     Point minPoint;
     Point maxPoint;
 };
-void add_node(Point minPoint, Point maxPoint, Octree *&MyTree )
+void add_node(point minPoint, point maxPoint, Octree *&MyTree )
 {
 int k;
     if (NULL == MyTree)
