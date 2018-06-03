@@ -54,7 +54,7 @@ void add_node(point minPoint, point maxPoint, Octree *&MyTree )
                 }
             case 2:
                 if (MyTree->child2 != NULL)
-                    add_node(minPoint, maxPoint, MyTree->child1);
+                    add_node(minPoint, maxPoint, MyTree->child2);
                 else{
                     MyTree->child2 = new Octree;
                     MyTree->child2->child1 = MyTree->child2->child2 = MyTree->child2->child3 = MyTree->child2->child4 = MyTree->child2->child5 = MyTree->child2->child6 = MyTree->child2->child7 = MyTree->child2->child8 = NULL;
@@ -67,7 +67,7 @@ void add_node(point minPoint, point maxPoint, Octree *&MyTree )
                 }
             case 3:
                 if (MyTree->child3 != NULL)
-                    add_node(minPoint, maxPoint, MyTree->child1);
+                    add_node(minPoint, maxPoint, MyTree->child3);
                 else{
                     MyTree->child1 = new Octree;
                     MyTree->child3->child1 = MyTree->child3->child2 = MyTree->child3->child3 = MyTree->child3->child4 = MyTree->child3->child5 = MyTree->child3->child6 = MyTree->child3->child7 = MyTree->child3->child8 = NULL;
@@ -80,7 +80,7 @@ void add_node(point minPoint, point maxPoint, Octree *&MyTree )
                 }
             case 4:
                 if (MyTree->child4 != NULL)
-                    add_node(minPoint, maxPoint, MyTree->child1);
+                    add_node(minPoint, maxPoint, MyTree->child4);
                 else{
                     MyTree->child4 = new Octree;
                     MyTree->child4->child1 = MyTree->child4->child2 = MyTree->child4->child3 = MyTree->child4->child4 = MyTree->child4->child5 = MyTree->child4->child6 = MyTree->child4->child7 = MyTree->child4->child8 = NULL;
@@ -93,7 +93,7 @@ void add_node(point minPoint, point maxPoint, Octree *&MyTree )
                 }
             case 5:
                 if (MyTree->child5 != NULL)
-                    add_node(minPoint, maxPoint, MyTree->child1);
+                    add_node(minPoint, maxPoint, MyTree->child5);
                 else{
                     MyTree->child5 = new Octree;
                     MyTree->child5->child1 = MyTree->child5->child2 = MyTree->child5->child3 = MyTree->child5->child4 = MyTree->child5->child5 = MyTree->child5->child6 = MyTree->child5->child7 = MyTree->child5->child8 = NULL;
@@ -106,7 +106,7 @@ void add_node(point minPoint, point maxPoint, Octree *&MyTree )
                 }
             case 6:
                 if (MyTree->child6 != NULL)
-                    add_node(minPoint, maxPoint, MyTree->child1);
+                    add_node(minPoint, maxPoint, MyTree->child6);
                 else{
                     MyTree->child6 = new Octree;
                     MyTree->child6->child1 = MyTree->child6->child2 = MyTree->child6->child3 = MyTree->child6->child4 = MyTree->child6->child5 = MyTree->child6->child6 = MyTree->child6->child7 = MyTree->child6->child8 = NULL;
@@ -119,7 +119,7 @@ void add_node(point minPoint, point maxPoint, Octree *&MyTree )
                 }
             case 7:
                 if (MyTree->child7 != NULL)
-                    add_node(minPoint, maxPoint, MyTree->child1);
+                    add_node(minPoint, maxPoint, MyTree->child7);
                 else{
                     MyTree->child7 = new Octree;
                     MyTree->child7->child1 = MyTree->child7->child2 = MyTree->child7->child3 = MyTree->child7->child4 = MyTree->child7->child5 = MyTree->child7->child6 = MyTree->child7->child7 = MyTree->child7->child8 = NULL;
@@ -132,7 +132,7 @@ void add_node(point minPoint, point maxPoint, Octree *&MyTree )
                 }
             case 8:
                 if (MyTree->child8 != NULL)
-                    add_node(minPoint, maxPoint, MyTree->child1);
+                    add_node(minPoint, maxPoint, MyTree->child8);
                 else{
                     MyTree->child8 = new Octree;
                     MyTree->child8->child1 = MyTree->child8->child2 = MyTree->child8->child3 = MyTree->child8->child4 = MyTree->child8->child5 = MyTree->child8->child6 = MyTree->child8->child7 = MyTree->child8->child8 = NULL;
