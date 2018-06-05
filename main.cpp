@@ -83,6 +83,23 @@ vector<double> IntersectRaySphere(point O, point D, sphere obj){
     return res;
 }
 
+long double ** rotationMatrix(double rotation){
+    long double ** rotMatrix = new long double * [3];
+    for (int i = 0; i < 3; i++)
+        rotMatrix[i] = new long double [3];
+    for (int i = 0; i < 3; i++){
+    for (int j = 0; j < 3; j++){
+        rotMatrix[i][j] = 0;
+        }
+    }
+    rotMatrix[0][0] = rotMatrix[2][2] = cos ( rotation * PI / 180.0 );
+    rotMatrix[0][2] = sin ( rotation * PI / 180.0 );
+    rotMatrix[2][0] = - rotMatrix[0][2];
+    rotMatrix[1][1] = 1;
+
+    return rotMatrix;
+}
+
 double ComputeLighting(point O, point N, vector<light> lights){
     double intensity = 0;
     double length_n = length(N);
