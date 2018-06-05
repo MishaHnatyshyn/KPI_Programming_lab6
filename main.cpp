@@ -221,6 +221,7 @@ int main(){
     for (int x = -canv.width/2; x < canv.width/2; x++) {
         for (int y = -canv.height/2; y < canv.height/2; y++) {
             point direction = CanvasToViewport(x,y,projection_plane_z,canv,viewport_size);
+            direction = matrix_multiplication(matrix_multiplication_rotation(matrix_multiplication_rotation(rotationMatrixX(45), rotationMatrixY(45)), rotationMatrixZ(45) ), direction);
             PIXELDATA color = TraceRay(camera_position, direction, 1, 100000001, object, lights);
             map = putPixel(x,y,color,canv,map);
 
