@@ -8,8 +8,9 @@
 
 using namespace std;
 
-Triangle readObj(string path)
+data readObj(string path)
 {
+    data result;
     vector < Triangle > res;
     string line;
     vector <points> v;
@@ -56,6 +57,9 @@ Triangle readObj(string path)
         temp.C.y = v[edges[i+2]].y;
         temp.C.z = v[edges[i+2]].z;
         res.push_back(temp);
-        cout << res.size();
     }
+    result.edges = edges;
+    result.vertex = v;
+    result.poligons = res;
+    return result;
 }

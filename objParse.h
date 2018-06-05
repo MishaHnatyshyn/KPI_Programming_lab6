@@ -22,7 +22,7 @@ struct Triangle{
 struct data{
     vector < points > vertex;
     vector < Triangle > poligons;
-    vector < vector < int > >edges;
+    vector < int >edges;
 };
 
-Triangle readObj(string path);
+data readObj(string path);
