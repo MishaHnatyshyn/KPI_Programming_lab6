@@ -37,3 +37,25 @@ point get_normal(Triangle triangle){
     float z = v1.x*v2.y - v1.y*v2.x;
     return {x, y, z};
 }
+
+long double ** matrix_multiplication(long double **A, long double **b){
+        int m = 3;
+        int q = 1;
+        int n = 3;
+
+        int N = 3;
+        long double **C = new long double *[N];
+
+        for (int i = 0; i < N; i++)
+            C[i] = new long double [q];
+        for(int i = 0; i < n; i++)
+            for(int j = 0; j < q; j++)
+            {
+                C[i][j] = 0;
+                for(int k = 0; k < N; k++) {
+                    C[i][j] += A[i][k] * b[k][j];
+                }
+            }
+
+        return C;
+    }
