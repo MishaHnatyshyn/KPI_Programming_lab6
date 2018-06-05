@@ -38,16 +38,16 @@ point get_normal(Triangle triangle){
     return {x, y, z};
 }
 
-long double ** matrix_multiplication(long double **A, long double **b){
-        int m = 3;
-        int q = 1;
-        int n = 3;
+point matrix_multiplication(long double **A, long double **b){
+    int m = 3;
+    int q = 1;
+    int n = 3;
 
-        int N = 3;
-        long double **C = new long double *[N];
+    int N = 3;
+    long double **C = new long double *[N];
 
-        for (int i = 0; i < N; i++)
-            C[i] = new long double [q];
+    for (int i = 0; i < N; i++)
+        C[i] = new long double [q];
         for(int i = 0; i < n; i++)
             for(int j = 0; j < q; j++)
             {
@@ -56,9 +56,13 @@ long double ** matrix_multiplication(long double **A, long double **b){
                     C[i][j] += A[i][k] * b[k][j];
                 }
             }
+     point mul;
+     mul.x = C[0][0];
+     mul.y = C[1][0];
+     mul.z = C[2][0];
+     return mul;
+}
 
-        return C;
-    }
 long double ** matrix_multiplication_rotation(long double **A, long double **b){
     int m = 3;
     int q = 3;
