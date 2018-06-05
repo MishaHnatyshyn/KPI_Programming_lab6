@@ -13,9 +13,16 @@ struct points{
     double z;
 };
 
+struct Triangle{
+    points A;
+    points B;
+    points C;
+};
+
 struct data{
     vector < points > vertex;
+    vector < Triangle > poligons;
     vector < vector < int > >edges;
 };
 
-data readObj(string path);
+Triangle readObj(string path);

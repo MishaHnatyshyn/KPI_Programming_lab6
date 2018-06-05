@@ -8,12 +8,12 @@
 
 using namespace std;
 
-data readObj(string path)
+Triangle readObj(string path)
 {
-    data res;
+    vector < Triangle > res;
     string line;
     vector <points> v;
-    vector < vector <int> >edges;
+    vector <int> edges;
 
     points temp;
     ifstream myfile (path);
@@ -33,21 +33,29 @@ data readObj(string path)
             istringstream iss(line);
             line.replace(0, 1, "");
             cout << line << endl;
-            int n = 0;
-            int temp;
+            int temp = 0;
             for (int i = 0; i < line.length(); ++i) {
-                if(line[i] == ' '){
-                    temp = i;
-                    while(line[i] != '/' && i < line.length()){i++;}
-                    edges.push_back(vector<int>());
-                    edges[n].push_back(stoi(line.substr(temp, i-temp )));
-                    cout << line.substr(temp, i-temp) << endl;
-                    n++;
+                    if(line[i] == ' ') {
+                        temp = i;
+                        while (line[i] != '/' && i < line.length()) { i++; }
+                        edges.push_back(stoi(line.substr(temp, i - temp)));
+                        cout << line.substr(temp, i - temp) << endl;
                 }
             }
         }
     }
-    res.vertex = v;
-    res.edges = edges;
-    return res;
+    for (int i = 0; i < edges.size(); i+=3) {
+        Triangle temp;
+        temp.A.x = v[edges[i]].x;
+        temp.A.y = v[edges[i]].y;
+        temp.A.z = v[edges[i]].z;
+        temp.B.x = v[edges[i+1]].x;
+        temp.B.y = v[edges[i+1]].y;
+        temp.B.z = v[edges[i+1]].z;
+        temp.C.x = v[edges[i+2]].x;
+        temp.C.y = v[edges[i+2]].y;
+        temp.C.z = v[edges[i+2]].z;
+        res.push_back(temp);
+        cout << res.size();
+    }
 }
