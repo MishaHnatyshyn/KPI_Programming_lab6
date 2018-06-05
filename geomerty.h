@@ -31,3 +31,4 @@ double max(double a, double b);
 double min(double a, double b);
 double length(point v1);
 long double ** matrix_multiplication(long double **A, long double **b);
+long double ** matrix_multiplication_rotation(long double **A, long double **b);
