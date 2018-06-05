@@ -1,9 +1,10 @@
 #include <iostream>
 #include <vector>
+#include <cmath>
 #include "intersect3D.h"
 
-
 using namespace std;
+#define PI 3.14159265
 
 struct sphere{
     point centre;
@@ -83,7 +84,41 @@ vector<double> IntersectRaySphere(point O, point D, sphere obj){
     return res;
 }
 
-long double ** rotationMatrix(double rotation){
+long double ** rotationMatrixX(double rotation){
+    long double ** rotMatrix = new long double * [3];
+    for (int i = 0; i < 3; i++)
+        rotMatrix[i] = new long double [3];
+    for (int i = 0; i < 3; i++){
+        for (int j = 0; j < 3; j++){
+            rotMatrix[i][j] = 0;
+        }
+    }
+    rotMatrix[1][1] = rotMatrix[2][2] = cos ( rotation * PI / 180.0 );
+    rotMatrix[2][1] = sin ( rotation * PI / 180.0 );
+    rotMatrix[1][2] = - rotMatrix[2][1];
+    rotMatrix[0][0] = 1;
+
+    return rotMatrix;
+}
+
+long double ** rotationMatrixZ(double rotation){
+    long double ** rotMatrix = new long double * [3];
+    for (int i = 0; i < 3; i++)
+        rotMatrix[i] = new long double [3];
+    for (int i = 0; i < 3; i++){
+        for (int j = 0; j < 3; j++){
+            rotMatrix[i][j] = 0;
+        }
+    }
+    rotMatrix[0][0] = rotMatrix[1][1] = cos ( rotation * PI / 180.0 );
+    rotMatrix[1][0] = sin ( rotation * PI / 180.0 );
+    rotMatrix[0][1] = - rotMatrix[1][0];
+    rotMatrix[2][2] = 1;
+
+    return rotMatrix;
+}
+
+long double ** rotationMatrixY(double rotation){
     long double ** rotMatrix = new long double * [3];
     for (int i = 0; i < 3; i++)
         rotMatrix[i] = new long double [3];
@@ -99,6 +134,7 @@ long double ** rotationMatrix(double rotation){
 
     return rotMatrix;
 }
+
 
 double ComputeLighting(point O, point N, vector<light> lights){
     double intensity = 0;
