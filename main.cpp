@@ -1,25 +1,9 @@
 #include <iostream>
-#include "bmp.h"
 #include <vector>
-#include <omp.h>
+#include "intersect3D.h"
+
 
 using namespace std;
-
-struct point{
-    float x;
-    float y;
-    float z;
-    point(float a, float b, float c){
-        x = a;
-        y = b;
-        z = c;
-    }
-    point(){
-        x = 0;
-        y = 0;
-        z = 0;
-    }
-};
 
 struct sphere{
     point centre;
@@ -68,36 +52,8 @@ struct light{
     }
 };
 
-double dot(point v1, point v2){
-    return v1.x*v2.x + v1.y*v2.y + v1.z*v2.z;
-}
-
-point subtract(point v1, point v2){
-    return {v1.x-v2.x, v1.y - v2.y, v1.z - v2.z};
-}
-point add(point v1, point v2){
-    return {v1.x+v2.x, v1.y + v2.y, v1.z + v2.z};
-}
-point multiply(double k, point v){
-    return {v.x*k, v.y*k, v.z*k};
-}
-
-double max(double a, double b){
-    if (a>b) return a;
-    else return b;
-}
-
-double min(double a, double b){
-    if (a<b) return a;
-    else return b;
-}
-
 PIXELDATA clamp(point v){
     return {min(255.0, max(0.0,v.x)), min(255, max(0.0,v.y)), min(255, max(0.0,v.z))};
-}
-
-double length(point v1){
-    return sqrt(dot(v1,v1));
 }
 
 point CanvasToViewport(int x, int y, int d,canvas canv, int viewport_size){
@@ -151,35 +107,33 @@ double ComputeLighting(point O, point N, vector<light> lights){
 }
 
 
-PIXELDATA TraceRay(point O, point D, int t_min, int t_max, vector<sphere> obj, vector<light> lights){
+PIXELDATA TraceRay(point O, point D, int t_min, int t_max, data object, vector<light> lights){
     PIXELDATA res;
     res.r = 255;
     res.g = 255;
     res.b = 255;
     double closest_t = 100000001;
-    sphere* closest_sphere = nullptr;
-    for (int i = 0; i < obj.size(); ++i) {
-        vector<double> t = IntersectRaySphere(O, D, obj[i]);
-        if (t[0] > t_min && t[0] < t_max && t[0] < closest_t){
-            closest_t = t[0];
-            closest_sphere = &obj[i];
-        }
-        if (t[1] > t_min && t[1] < t_max && t[1] < closest_t){
-            closest_t = t[1];
-            closest_sphere = &obj[i];
+    data* closest_object = nullptr;
+    Triangle curr_triangle;
+    Triangle triangle;
+    for (int j = 0; j < object.poligons.size(); ++j) {
+        int t = intersect(O, D, object.poligons[j]);
+        if (t){
+            closest_t = t;
+            closest_object = &object;
+            curr_triangle = object.poligons[j];
+            break;
         }
     }
-    if (closest_sphere == nullptr){
+    if (closest_object == nullptr)
         return res;
-    }
-
     point point1 = add(O, multiply(closest_t, D));
-    point normal = subtract(point1, closest_sphere->centre);
+    point normal = get_normal(curr_triangle);
     normal = multiply(1.0/length(normal), normal);
     double i = ComputeLighting(point1,normal,lights);
-    res.r = closest_sphere->color.r * i;
-    res.g = closest_sphere->color.g * i;
-    res.b = closest_sphere->color.b * i;
+    res.r = closest_object->color.r * i;
+    res.g = closest_object->color.g * i;
+    res.b = closest_object->color.b * i;
 
     return res;
 }
@@ -191,7 +145,7 @@ int main(){
     canv.height = 200;
     int viewport_size = 1;
     int projection_plane_z = 1;
-    point camera_position(0,0,0);
+    point camera_position(0,0,-10);
     vector<sphere> spheres;
     vector<light> lights;
     vector<PIXELDATA> row(canv.width);
@@ -200,22 +154,21 @@ int main(){
         map.push_back(row);
     }
 
-    //omp_set_num_threads(2);
-    spheres.push_back(sphere(0, -1, 3 , 1, 255, 0, 0));
-    spheres.push_back(sphere(0, 0, 3 , 1, 0, 0, 255));
-    spheres.push_back(sphere(-2, 0, 4 , 1, 0, 255, 0));
     lights.push_back(light("ambient", 0.2));
     lights.push_back(light("point", 0.6, 2, 1, 0));
     lights.push_back(light("directional", 0.2, 1, 4, 4));
 
 
-    #pragma omp parallel private(x, y)
-    #pragma omp for collapse(2) schedule(dynamic, CHUNK)
+    data object = readObj("cube.obj");
+    object.color.r = 0;
+    object.color.g = 255;
+    object.color.b = 0;
+
 
     for (int x = -canv.width/2; x < canv.width/2; x++) {
         for (int y = -canv.height/2; y < canv.height/2; y++) {
             point direction = CanvasToViewport(x,y,projection_plane_z,canv,viewport_size);
-            PIXELDATA color = TraceRay(camera_position, direction, 1, 100000001, spheres, lights);
+            PIXELDATA color = TraceRay(camera_position, direction, 1, 100000001, object, lights);
             map = putPixel(x,y,color,canv,map);
 
         }
