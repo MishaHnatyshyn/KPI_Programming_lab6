@@ -59,3 +59,24 @@ long double ** matrix_multiplication(long double **A, long double **b){
 
         return C;
     }
+long double ** matrix_multiplication_rotation(long double **A, long double **b){
+    int m = 3;
+    int q = 3;
+    int n = 3;
+
+    int N = 3;
+    long double **C = new long double *[N];
+
+    for (int i = 0; i < N; i++)
+        C[i] = new long double [q];
+    for(int i = 0; i < n; i++)
+        for(int j = 0; j < q; j++)
+        {
+            C[i][j] = 0;
+            for(int k = 0; k < N; k++) {
+                C[i][j] += A[i][k] * b[k][j];
+            }
+        }
+
+    return C;
+}
