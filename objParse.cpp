@@ -18,7 +18,7 @@ data readObj(string path)
     vector <points> vn;
     vector <int> edges;
     vector <int> normals;
-
+    bool flag = false;
     points temp;
     ifstream myfile (path);
     while(!myfile.eof()){
@@ -39,6 +39,7 @@ data readObj(string path)
             v.push_back(temp);
         }
         else if (line[0] == 'v' && line[1] == 'n') {
+            flag = true;
             istringstream iss(line);
             line.replace(0, 3, "");
             int curr = line.find(' ');
@@ -64,14 +65,16 @@ data readObj(string path)
                         while (line[i] != '/' && i < line.length()) { i++; }
                         edges.push_back(stoi(line.substr(temp, i - temp)));
                        // cout << line.substr(temp, i - temp) << endl;
-                        i++;
-                        while(line[i] != '/' && i < line.length()){i++;};
-                        i++;
-                        temp = i;
-                        while(line[i] != ' ' && i < line.length()){i++;};
-                        cout << line.substr(temp, i - temp) << endl;
-                        normals.push_back(stoi(line.substr(temp, i - temp)));
-                        i--;
+                        if (flag) {
+                            i++;
+                            while (line[i] != '/' && i < line.length()) { i++; };
+                            i++;
+                            temp = i;
+                            while (line[i] != ' ' && i < line.length()) { i++; };
+                            cout << line.substr(temp, i - temp) << endl;
+                            normals.push_back(stoi(line.substr(temp, i - temp)));
+                            i--;
+                        }
                     }
             }
         }
@@ -93,12 +96,14 @@ data readObj(string path)
         temp.C.y = v[edges[i]-1].y;
         temp.C.z = v[edges[i]-1].z;
         res.push_back(temp);
-        temp2.x = vn[normals[i]-1].x;
-        temp2.y = vn[normals[i]-1].y;
-        temp2.z = vn[normals[i]-1].z;
-        res2.push_back(temp2);
-        cout << "------------------------------------------" << endl;
-        cout << temp2.x << " " << temp2.y << " " << temp2.z << endl;
+        if(flag) {
+            temp2.x = vn[normals[i] - 1].x;
+            temp2.y = vn[normals[i] - 1].y;
+            temp2.z = vn[normals[i] - 1].z;
+            res2.push_back(temp2);
+            cout << temp2.x << " " << temp2.y << " " << temp2.z << endl;
+            cout << "------------------------------------------" << endl;
+        }
     }
     result.edges = edges;
     result.vertex = v;
