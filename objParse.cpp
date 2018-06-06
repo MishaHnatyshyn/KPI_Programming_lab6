@@ -55,10 +55,13 @@ data readObj(string path)
                         edges.push_back(stoi(line.substr(temp, i - temp)));
                        // cout << line.substr(temp, i - temp) << endl;
                         i++;
-                        temp = i;
                         while(line[i] != '/' && i < line.length()){i++;};
+                        i++;
+                        temp = i;
+                        while(line[i] != ' ' && i < line.length()){i++;};
+                        cout << line.substr(temp, i - temp) << endl;
                         normals.push_back(stoi(line.substr(temp, i - temp)));
-                        //cout << line.substr(temp, i - temp) << endl;
+                        i--;
                     }
             }
         }
