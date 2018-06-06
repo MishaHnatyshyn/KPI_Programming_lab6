@@ -25,21 +25,31 @@ data readObj(string path)
         getline (myfile,line);
         if (line[0] == 'v' && line[1] == ' ') {
             istringstream iss(line);
-            line.replace(0, 1, "");
-            std::string::size_type sz;     // alias of size_t
-            temp.x = stof(line, &sz);
-            temp.y = stof(line.substr(sz));
-            temp.z = stof(line.substr(sz*2));
-            //cout << temp.x << "\t" << temp.y << "\t" << temp.z << endl;
+            line.replace(0, 2, "");
+            int curr = line.find(' ');
+            int prev = 0;
+            temp.x = stof(line.substr(prev, curr));
+            prev = curr+1;
+            curr = line.find(' ', prev);
+            temp.y = stof(line.substr(prev, curr));
+            prev = curr+1;
+            curr = line.find(' ', prev);
+            temp.z = stof(line.substr(prev, curr));
+            cout << temp.x << "\t" << temp.y << "\t" << temp.z << endl;
             v.push_back(temp);
         }
         else if (line[0] == 'v' && line[1] == 'n') {
             istringstream iss(line);
-            line.replace(0, 2, "");
-            std::string::size_type sz;     // alias of size_t
-            temp.x = stof(line, &sz);
-            temp.y = stof(line.substr(sz));
-            temp.z = stof(line.substr(sz*2));
+            line.replace(0, 3, "");
+            int curr = line.find(' ');
+            int prev = 0;
+            temp.x = stof(line.substr(prev, curr));
+            prev = curr+1;
+            curr = line.find(' ', prev);
+            temp.y = stof(line.substr(prev, curr));
+            prev = curr+1;
+            curr = line.find(' ', prev);
+            temp.z = stof(line.substr(prev, curr));
             cout << temp.x << "\t" << temp.y << "\t" << temp.z << endl;
             vn.push_back(temp);
         }
