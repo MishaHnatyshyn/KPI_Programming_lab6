@@ -1,15 +1,15 @@
 #include <iostream>
+#include <vector>
+#include "geomerty.h"
 
-struct point {
-    float x;
-    float y;
-    float z;
-};
 
 struct Octree{
     Octree * children[8];
     point minPoint;
     point maxPoint;
+    bool flag;
+    std::vector<int> poligons;
+
 };
 
-void add_node(point minPoint, point maxPoint, Octree *&MyTree);
+Octree * add_node(point minPoint, point maxPoint, Octree *MyTree);
