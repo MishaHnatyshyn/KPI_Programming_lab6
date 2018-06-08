@@ -27,10 +27,71 @@ Octree * add_node(point minPoint, point maxPoint, Octree *MyTree ) {
 
         }
     }
-    float half_size_x = (MyTree->minPoint.x + MyTree->maxPoint.x)/2;
-    float half_size_y = (MyTree->minPoint.y + MyTree->maxPoint.y)/2;
-    float half_size_z = (MyTree->minPoint.z + MyTree->maxPoint.z)/2;
+    float half_size_x = (MyTree->minPoint.x + fabsf(MyTree->maxPoint.x))/2;
+    float half_size_y = (MyTree->minPoint.y + fabsf(MyTree->maxPoint.y))/2;
+    float half_size_z = (MyTree->minPoint.z + fabsf(MyTree->maxPoint.z))/2;
+
     MyTree->children[0]->minPoint.x = MyTree->minPoint.x;
+    MyTree->children[0]->minPoint.y = MyTree->minPoint.y;
+    MyTree->children[0]->minPoint.z = MyTree->minPoint.z;
+    MyTree->children[0]->maxPoint.x = half_size_x;
+    MyTree->children[0]->maxPoint.y = half_size_y;
+    MyTree->children[0]->maxPoint.z = half_size_z;
+
+    Octree * f = MyTree->children[0];
+
+    MyTree->children[1]->minPoint.x = f->minPoint.x;
+    MyTree->children[1]->minPoint.y = f->minPoint.y;
+    MyTree->children[1]->minPoint.z = f->minPoint.z + fabsf(half_size_z);
+    MyTree->children[1]->maxPoint.x = f->maxPoint.x;
+    MyTree->children[1]->maxPoint.y = f->maxPoint.y;
+    MyTree->children[1]->maxPoint.z = f->maxPoint.z + fabsf(half_size_z);
+
+    MyTree->children[2]->minPoint.x = f->minPoint.x + fabsf(half_size_x);
+    MyTree->children[2]->minPoint.y = f->minPoint.y;
+    MyTree->children[2]->minPoint.z = f->minPoint.z + fabsf(half_size_z);
+    MyTree->children[2]->maxPoint.x = f->maxPoint.x + fabsf(half_size_x);
+    MyTree->children[2]->maxPoint.y = f->maxPoint.y;
+    MyTree->children[2]->maxPoint.z = f->maxPoint.z + fabsf(half_size_z);
+
+    MyTree->children[3]->minPoint.x = f->minPoint.x + fabsf(half_size_x);
+    MyTree->children[3]->minPoint.y = f->minPoint.y;
+    MyTree->children[3]->minPoint.z = f->minPoint.z;
+    MyTree->children[3]->maxPoint.x = f->maxPoint.x + fabsf(half_size_x);
+    MyTree->children[3]->maxPoint.y = f->maxPoint.y;;
+    MyTree->children[3]->maxPoint.z = f->maxPoint.z;
+
+    MyTree->children[4]->minPoint.x = f->minPoint.x;
+    MyTree->children[4]->minPoint.y = f->minPoint.y + fabsf(half_size_y);
+    MyTree->children[4]->minPoint.z = f->minPoint.z;
+    MyTree->children[4]->maxPoint.x = f->maxPoint.x;
+    MyTree->children[4]->maxPoint.y = MyTree->maxPoint.y;
+    MyTree->children[4]->maxPoint.z = f->maxPoint.z;
+
+    MyTree->children[5]->minPoint.x = f->minPoint.x;
+    MyTree->children[5]->minPoint.y = f->minPoint.y + fabsf(half_size_y);
+    MyTree->children[5]->minPoint.z = f->minPoint.z + fabsf(half_size_z);
+    MyTree->children[5]->maxPoint.x = f->maxPoint.x;
+    MyTree->children[5]->maxPoint.y = MyTree->maxPoint.y;
+    MyTree->children[5]->maxPoint.z = MyTree->children[1]->maxPoint.z;
+
+
+    MyTree->children[6]->minPoint.x = MyTree->children[0]->maxPoint.x;
+    MyTree->children[6]->minPoint.y = MyTree->children[0]->maxPoint.y;
+    MyTree->children[6]->minPoint.z = MyTree->children[0]->maxPoint.z;
+    MyTree->children[6]->maxPoint.x = MyTree->children[2]->maxPoint.x;
+    MyTree->children[6]->maxPoint.y = MyTree->maxPoint.y;
+    MyTree->children[6]->maxPoint.z = MyTree->children[2]->maxPoint.z;
+
+
+    MyTree->children[7]->minPoint.x = f->minPoint.x + fabsf(half_size_y);
+    MyTree->children[7]->minPoint.y = f->minPoint.y + fabsf(half_size_y);
+    MyTree->children[7]->minPoint.z = f->minPoint.z;
+    MyTree->children[7]->maxPoint.x = MyTree->maxPoint.x;
+    MyTree->children[7]->maxPoint.y = MyTree->maxPoint.y;
+    MyTree->children[7]->maxPoint.z = f->maxPoint.z;
+
+    /*MyTree->children[0]->minPoint.x = MyTree->minPoint.x;
     MyTree->children[0]->minPoint.y = MyTree->minPoint.y;
     MyTree->children[0]->minPoint.z = MyTree->minPoint.z;
     MyTree->children[0]->maxPoint.x = half_size_x;
@@ -39,54 +100,55 @@ Octree * add_node(point minPoint, point maxPoint, Octree *MyTree ) {
 
     MyTree->children[1]->minPoint.x = MyTree->minPoint.x;
     MyTree->children[1]->minPoint.y = MyTree->minPoint.y;
-    MyTree->children[1]->minPoint.z = MyTree->minPoint.z + half_size_z;
+    MyTree->children[1]->minPoint.z = MyTree->minPoint.z + fabsf(half_size_z);
     MyTree->children[1]->maxPoint.x = half_size_x;
     MyTree->children[1]->maxPoint.y = half_size_y;
-    MyTree->children[1]->maxPoint.z = half_size_z*2;
+    MyTree->children[1]->maxPoint.z = MyTree->maxPoint.z;
 
     MyTree->children[2]->minPoint.x = half_size_x;
     MyTree->children[2]->minPoint.y = MyTree->minPoint.y;
     MyTree->children[2]->minPoint.z = half_size_z;
-    MyTree->children[2]->maxPoint.x = half_size_x*2;
+    MyTree->children[2]->maxPoint.x = MyTree->maxPoint.x;
     MyTree->children[2]->maxPoint.y = half_size_y;
-    MyTree->children[2]->maxPoint.z = half_size_z*2;
+    MyTree->children[2]->maxPoint.z = MyTree->maxPoint.z;
 
     MyTree->children[3]->minPoint.x = half_size_x;
     MyTree->children[3]->minPoint.y = MyTree->minPoint.y;
     MyTree->children[3]->minPoint.z = MyTree->minPoint.z;
-    MyTree->children[3]->maxPoint.x = half_size_x*2;
+    MyTree->children[3]->maxPoint.x = MyTree->maxPoint.x;
     MyTree->children[3]->maxPoint.y = half_size_y;
     MyTree->children[3]->maxPoint.z = half_size_z;
 
     MyTree->children[4]->minPoint.x = MyTree->children[0]->minPoint.x;
-    MyTree->children[4]->minPoint.y = MyTree->children[0]->minPoint.y + half_size_y;
+    MyTree->children[4]->minPoint.y = MyTree->children[0]->minPoint.y + fabsf(half_size_y);
     MyTree->children[4]->minPoint.z = MyTree->children[0]->minPoint.z;
     MyTree->children[4]->maxPoint.x = MyTree->children[0]->maxPoint.x;
-    MyTree->children[4]->maxPoint.y = MyTree->children[0]->maxPoint.y + half_size_y;
+    MyTree->children[4]->maxPoint.y = MyTree->maxPoint.y;
     MyTree->children[4]->maxPoint.z = MyTree->children[0]->maxPoint.z;
 
     MyTree->children[5]->minPoint.x = MyTree->children[1]->minPoint.x;
-    MyTree->children[5]->minPoint.y = MyTree->children[1]->minPoint.y + half_size_y;
+    MyTree->children[5]->minPoint.y = MyTree->children[1]->minPoint.y + fabsf(half_size_y);
     MyTree->children[5]->minPoint.z = MyTree->children[1]->minPoint.z;
     MyTree->children[5]->maxPoint.x = MyTree->children[1]->maxPoint.x;
-    MyTree->children[5]->maxPoint.y = MyTree->children[1]->maxPoint.y + half_size_y;
+    MyTree->children[5]->maxPoint.y = MyTree->maxPoint.y;
     MyTree->children[5]->maxPoint.z = MyTree->children[1]->maxPoint.z;
 
 
-    MyTree->children[6]->minPoint.x = MyTree->children[2]->minPoint.x;
-    MyTree->children[6]->minPoint.y = MyTree->children[2]->minPoint.y + half_size_y;
-    MyTree->children[6]->minPoint.z = MyTree->children[2]->minPoint.z;
+    MyTree->children[6]->minPoint.x = MyTree->children[0]->maxPoint.x;
+    MyTree->children[6]->minPoint.y = MyTree->children[0]->maxPoint.y;
+    MyTree->children[6]->minPoint.z = MyTree->children[0]->maxPoint.z;
     MyTree->children[6]->maxPoint.x = MyTree->children[2]->maxPoint.x;
-    MyTree->children[6]->maxPoint.y = MyTree->children[2]->maxPoint.y + half_size_y;
+    MyTree->children[6]->maxPoint.y = MyTree->maxPoint.y;
     MyTree->children[6]->maxPoint.z = MyTree->children[2]->maxPoint.z;
 
 
     MyTree->children[7]->minPoint.x = MyTree->children[2]->minPoint.x;
-    MyTree->children[7]->minPoint.y = MyTree->children[2]->minPoint.y + half_size_y;
+    MyTree->children[7]->minPoint.y = MyTree->children[2]->minPoint.y + fabsf(half_size_y);
     MyTree->children[7]->minPoint.z = MyTree->children[2]->minPoint.z;
     MyTree->children[7]->maxPoint.x = MyTree->children[2]->maxPoint.x;
-    MyTree->children[7]->maxPoint.y = MyTree->children[2]->maxPoint.y + half_size_y;
+    MyTree->children[7]->maxPoint.y = MyTree->maxPoint.y;
     MyTree->children[7]->maxPoint.z = MyTree->children[2]->maxPoint.z;
 
+    */
     return MyTree;
 }
