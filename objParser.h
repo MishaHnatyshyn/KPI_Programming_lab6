@@ -4,18 +4,17 @@
 #include <sstream>
 #include <vector>
 #include <regex>
-#include "geomerty.h"
+#include "octree.h"
 #include "bmp.h"
-
 
 using namespace std;
 
-
-
 struct data{
+    ~data();
     vector < point > vertex;
     vector < Triangle > poligons;
-    vector <int>edges;
+    vector < point > normals;
+    vector < int >edges;
     PIXELDATA color;
 };
 

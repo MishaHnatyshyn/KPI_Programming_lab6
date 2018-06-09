@@ -14,10 +14,10 @@ point ViewportToCanvas(point a, canvas canv, int viewport_size, point camera_pos
 }
 
 
-double ComputeLighting(point O, point N, vector<light> lights){
+/*double ComputeLighting(point O, point N, light* lights){
     double intensity = 0;
     double length_n = 1;
-    for (int i = 0; i < lights.size(); ++i) {
+    for (int i = 0; i < 2; ++i) {
         light curr_light = lights[i];
         if(curr_light.type == "ambient"){
             intensity += curr_light.intensity;
@@ -35,10 +35,11 @@ double ComputeLighting(point O, point N, vector<light> lights){
         }
     }
     return intensity;
-}
+}*/
 
+/*
 
-PIXELDATA TraceRay(point O, point D, int t_min, int t_max, data object, vector<light> lights, vector<int> poligons){
+PIXELDATA TraceRay(point O, point D, int t_min, int t_max, data* object, light* lights, int poligons[10], int n){
     PIXELDATA res;
     res.r = 255;
     res.g = 255;
@@ -50,16 +51,16 @@ PIXELDATA TraceRay(point O, point D, int t_min, int t_max, data object, vector<l
     Triangle * curr_triangle = nullptr;
     Triangle triangle;
     point intersection_point;
-    for (int j = 0; j < poligons.size(); ++j) {
-        vector<float> t = intersect(O, D, object.poligons[poligons[j]]);
-        if (t[0] > 0 && (curr_triangle== nullptr || object.poligons[poligons[j]].A.z < curr_triangle->A.z)){
+    for (int j = 0; j < n-1; ++j) {
+        vector<float> t = intersect3D(O, D, object->poligons[poligons[j]]);
+        if (t[0] > 0 && (curr_triangle== nullptr || object->poligons[poligons[j]].A.z < curr_triangle->A.z)){
             intersection_point.x = t[1];
             intersection_point.y = t[2];
             intersection_point.z = t[3];
             closest_t = t[0];
             closest_z = t[3];
-            closest_object = &object;
-            curr_triangle = &object.poligons[poligons[j]];
+            closest_object = object;
+            curr_triangle = &object->poligons[poligons[j]];
         }
 
     }
@@ -75,17 +76,20 @@ PIXELDATA TraceRay(point O, point D, int t_min, int t_max, data object, vector<l
     res.b = floor(closest_object->color.b * i);
     return res;
 }
+*/
 
-vector<vector<PIXELDATA>> putPixel(int x_prev, int y_prev, PIXELDATA color, canvas viewPort, vector<vector<PIXELDATA>> map){
+/*void putPixel(int x_prev, int y_prev, PIXELDATA color, canvas viewPort, PIXELDATA** map){
     int x = viewPort.width/2 + x_prev;
     int y = viewPort.height/2 - y_prev - 1;
     if (x < 0 || x >= viewPort.width || y < 0 || y >= viewPort.height) {
-        return map;
+        return;
     }
     map[y][x] = color;
-    return map;
-}
+//    map[y][x] = PIXELDATA(255,150,150);
+    return;
+}*/
 
+/*
 
 long double ** rotationMatrixZ(double rotation){
     long double ** rotMatrix = new long double * [3];
@@ -137,3 +141,4 @@ long double ** rotationMatrixX(double rotation){
 
     return rotMatrix;
 }
+*/

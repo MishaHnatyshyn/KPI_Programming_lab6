@@ -2,4 +2,4 @@
 #include <iostream>
 
 point cross (point a, point b);
-int intersect (point RayBegin, point dir, Triangle T);
+vector<float> intersect3D (point RayBegin, point dir, Triangle T);

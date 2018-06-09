@@ -2,7 +2,7 @@
 
 Octree * add_node(point minPoint, point maxPoint, Octree *MyTree ) {
     if (NULL == MyTree) {
-        MyTree = new Octree;
+        MyTree = new Octree();
         MyTree->flag = false;
         MyTree->minPoint.x = minPoint.x;
         MyTree->minPoint.y = minPoint.y;
@@ -18,7 +18,8 @@ Octree * add_node(point minPoint, point maxPoint, Octree *MyTree ) {
         if (MyTree->children[k] != NULL) {
             add_node(minPoint, maxPoint, MyTree->children[k]);
         } else {
-            MyTree->children[k] = new Octree;
+            Octree* temp = new Octree();
+            MyTree->children[k] = temp;
             MyTree->children[k]->flag = false;
 
             for (int i = 0; i < 8; i++) {
@@ -93,4 +94,8 @@ Octree * add_node(point minPoint, point maxPoint, Octree *MyTree ) {
     MyTree->children[7]->maxPoint.z = f->maxPoint.z;
 
     return MyTree;
+}
+
+Octree::~Octree() {
+
 }

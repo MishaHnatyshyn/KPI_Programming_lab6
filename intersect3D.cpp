@@ -12,7 +12,10 @@ point cross (point a, point b){
     return res;
 }
 
-int intersect (point RayBegin, point dir, Triangle T) {
+vector<float> intersect3D (point RayBegin, point dir, Triangle T) {
+    vector<float> result = {-1,0,0,0};
+
+
 
     point    u, v, n;              // triangle vectors
     point   w0, w;           // ray vectors
@@ -30,8 +33,9 @@ int intersect (point RayBegin, point dir, Triangle T) {
     v.z = T.C.z - T.A.z;
 
     n = cross(u, v);              // cross product
-    if (n.x == 0 && n.y == 0 && n.z == 0)             // triangle is degenerate
-        return -1;                  // do not deal with this case
+    if (n.x == 0 && n.y == 0 && n.z == 0){
+        return  result;
+    }             // triangle is degenerate
 
     //w0 = R.P0 - T.A;
     w0.x = RayBegin.x - T.A.x;
@@ -42,15 +46,14 @@ int intersect (point RayBegin, point dir, Triangle T) {
     a = -dot(n,w0);
     b = dot(n,dir);
     if (fabs(b) < SMALL_NUM) {     // ray is  parallel to triangle plane
-        if (a == 0)                 // ray lies in triangle plane
-            return 2;
-        else return 0;              // ray disjoint from plane
+        return  result;
     }
 
     // get intersect point of ray with triangle plane
     r = a / b;
-    if (r < 0.0)                    // ray goes away from triangle
-        return 0;                   // => no intersect
+    if (r < 0.0){
+        return  result;
+    }             // ray goes away from triangle
     // for a segment, also test if (r > 1.0) => no intersect
 
     I1.x = RayBegin.x + r * dir.x;            // intersect point of ray and plane
@@ -73,10 +76,16 @@ int intersect (point RayBegin, point dir, Triangle T) {
     // get and test parametric coords
     double s, t;
     s = (uv * wv - vv * wu) / D;
-    if (s < 0.0 || s > 1.0)         // I is outside T
-        return 0;
+    if (s < 0.0 || s > 1.0){
+        return  result;
+    }         // I is outside T
     t = (uv * wu - uu * wv) / D;
-    if (t < 0.0 || (s + t) > 1.0)  // I is outside T
-        return 0;
-    return 1;                       // I is in T
+    if (t < 0.0 || (s + t) > 1.0){
+        return  result;
+    }  // I is outside T
+    result[0] = 1;
+    result[1] = I1.x;
+    result[2] = I1.y;
+    result[3] = I1.z;
+    return  result;
 }

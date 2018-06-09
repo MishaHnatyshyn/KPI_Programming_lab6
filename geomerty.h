@@ -20,6 +20,9 @@ struct Triangle{
     point A;
     point B;
     point C;
+    point get_midpoint(){
+        return {(this->A.x + this->B.x + this->C.x)/3,(this->A.y + this->B.y + this->C.y)/3,(this->A.z + this->B.z + this->C.z)/3};
+    }
 };
 
 point get_normal(Triangle);
@@ -32,3 +35,6 @@ double min(double a, double b);
 double length(point v1);
 point matrix_multiplication(long double **A, long double **b);
 long double ** matrix_multiplication_rotation(long double **A, long double **b);
+
+double multy_max(double* a, int n);
+double multy_min(double* a, int n);

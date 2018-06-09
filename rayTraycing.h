@@ -30,14 +30,16 @@ point CanvasToViewport(int, int, int, canvas, int);
 
 point ViewportToCanvas(point a,canvas canv, int viewport_size, point);
 
-double ComputeLighting(point, point, vector<light>);
+//double ComputeLighting(point, point, light*);
 
-PIXELDATA TraceRay(point, point, int, int, data, vector<light>, vector<int>);
+//PIXELDATA TraceRay(point, point, int, int, data*, light*, int[10], int n);
 
-vector<vector<PIXELDATA>> putPixel(int, int, PIXELDATA, canvas, vector<vector<PIXELDATA>>);
+//void putPixel(int, int, PIXELDATA, canvas, PIXELDATA**);
 
+/*
 long double ** rotationMatrixZ(double rotation);
 
 long double ** rotationMatrixY(double);
 
 long double ** rotationMatrixX(double);
+*/
