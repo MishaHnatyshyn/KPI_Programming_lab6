@@ -1,2 +1,2 @@
 # KPI_Programming_lab6
-ray tracing using r-tree
+ray tracing using octree
